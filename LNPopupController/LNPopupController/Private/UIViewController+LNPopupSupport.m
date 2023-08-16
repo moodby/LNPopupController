@@ -119,10 +119,12 @@ static NSString* const ePCIEBase64 = @"X2V4aXN0aW5nUHJlc2VudGF0aW9uQ29udHJvbGxlc
 
 - (void)closePopupAnimated:(BOOL)animated completion:(void(^)(void))completionBlock
 {
+    __weak typeof(self) weakSelf = self;
+    
 	if(self.view.window == nil)
 	{
 		[self.view _ln_letMeKnowWhenViewInWindowHierarchy:^(dispatch_block_t completionBlockInWindow) {
-			[self closePopupAnimated:NO completion:^{
+			[weakSelf closePopupAnimated:NO completion:^{
 				if(completionBlock) { completionBlock(); }
 				completionBlockInWindow();
 			}];
